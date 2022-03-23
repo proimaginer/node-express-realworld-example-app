@@ -1864,6 +1864,37 @@
       }]
     },
     {
+      "name": "ArticleHistory",
+      "description": "ArticleHistory GET List",
+      "item": [{
+        "name": "GET ArticleHistories",
+        "request": {
+          "url": "{{apiUrl}}/articles/{{slug}}/article-histories",
+          "method": "GET",
+          "header": [{
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          },
+          {
+            "key": "X-Requested-With",
+            "value": "XMLHttpRequest",
+            "description": ""
+          },
+          {
+            "key": "Authorization",
+            "value": "Token {{token}}",
+            "description": ""
+          }],
+          "body": {
+            "mode": "raw",
+            "raw": ""
+          },
+          "description": ""
+        }
+      }]
+    },
+    {
       "name": "Cleanup",
       "description": "",
       "item": [{
