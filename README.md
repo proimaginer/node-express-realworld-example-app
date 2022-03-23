@@ -1,3 +1,57 @@
+### 1. 개발 내용 설명  
+- ArticleHistory 모델 및 로직 추가  
+  - ArticleHistory 모델 생성  
+    ```javascript
+    {
+      // 추가,생성,삭제된 Article 정보
+      articleData: { ... },
+      // 작업자 정보
+      author: ObjectId(...),
+      // 요청한 method
+      method: 'POST',
+      // 생성 날짜 (자동 추가)
+      createdAt: '2022-03-23 16:35:39.430Z',
+    }
+    ```
+
+  - ArticleHistory 저장 함수  
+    lib/utils.js > saveArticleHistory function
+    새로운 ArticleHistory를 만들고 저장하는 함수  
+
+- ArticleHistory 목록 조회 API 추가  
+  - GET /articles/{{slug}}/article-histories  
+  - 로그인된 유저 토큰 정보와 article의 slug 정보로 article-history 목록을 조회해서 내려준다.  
+  - 자신이 생성한 article이 아닌 경우 404 에러 발생
+
+- ArticleHistory 목록 조회 테스트코드 추가  
+  - 개발 시에는 postman으로 단일 조회 테스트  
+    tests/test.js에 postman으로 사용하는 방법과 동일한 axios 로직 추가
+  - 개발 완료 후 api-tests.postman.json에 ArticleHistory API 관련 테스트코드 추가 > `npm run test` 로 테스트
+  ![Node/Express/Mongoose Example App](test-image.png)
+### 2. 실행 및 테스트 방법
+
+1. 설치 방법
+```shell
+git clone https://github.com/proimaginer/node-express-realworld-example-app.git
+```
+```shell
+cd node-express-realworld-example-app && npm i
+```
+
+2. 실행 방법
+```shell
+npm run dev
+```
+
+3. 테스트 방법
+```shell
+npm run test
+```
+
+<br/>
+
+--------------------------------------------------------
+
 # ![Node/Express/Mongoose Example App](project-logo.png)
 
 [![Build Status](https://travis-ci.org/anishkny/node-express-realworld-example-app.svg?branch=master)](https://travis-ci.org/anishkny/node-express-realworld-example-app)
