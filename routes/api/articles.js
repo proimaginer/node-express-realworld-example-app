@@ -5,6 +5,8 @@ var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 var auth = require('../auth');
 
+const { saveArticleHistory } = require('../../lib/utils');
+
 // Preload article objects on routes with ':article'
 router.param('article', function(req, res, next, slug) {
   Article.findOne({ slug: slug})
@@ -131,7 +133,9 @@ router.post('/', auth.required, function(req, res, next) {
     article.author = user;
 
     return article.save().then(function(){
-      console.log(article.author);
+      // ArticleHistory 저장
+      saveArticleHistory(article, user, 'post');
+
       return res.json({article: article.toJSONFor(user)});
     });
   }).catch(next);
@@ -170,6 +174,9 @@ router.put('/:article', auth.required, function(req, res, next) {
       }
 
       req.article.save().then(function(article){
+        // ArticleHistory 저장
+        saveArticleHistory(article, user, 'put');
+
         return res.json({article: article.toJSONFor(user)});
       }).catch(next);
     } else {
@@ -185,6 +192,9 @@ router.delete('/:article', auth.required, function(req, res, next) {
 
     if(req.article.author._id.toString() === req.payload.id.toString()){
       return req.article.remove().then(function(){
+        // ArticleHistory 저장
+        saveArticleHistory(req.article, user, 'delete');
+        
         return res.sendStatus(204);
       });
     } else {
