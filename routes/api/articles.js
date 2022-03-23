@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 var Article = mongoose.model('Article');
+var ArticleHistory = mongoose.model('ArticleHistory');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 var auth = require('../auth');
@@ -284,6 +285,46 @@ router.delete('/:article/comments/:comment', auth.required, function(req, res, n
   } else {
     res.sendStatus(403);
   }
+});
+
+// ArticleHistory 조회 API
+router.get('/:article/article-histories', auth.required, function(req, res, next) {
+  // slug와 요청한 유저 정보로 조회하기 위한 쿼리 생성
+  const articleSlug = req.article.slug;
+  const author = req.payload.id;
+  const query = {
+    author,
+    'articleData.slug': articleSlug,
+  };
+
+  // limit, offset 설정
+  const limit = req.query?.limit || 20;
+  const offset = req.query?.offset || 0;
+
+  // 요청한 유저 정보 조회
+  User.findById(author).then(function(user) {
+    // 유저 정보가 유효하지 않다면 401 에러
+    if (!user) {
+      return res.sendStatus(401);
+    }
+
+    // ArticleHistory 목록 및 개수 조회
+    Promise.all([
+      ArticleHistory.find(query)
+        .limit(Number(limit))
+        .skip(Number(offset))
+        .populate('author')
+        .exec(),
+      ArticleHistory.count(query)
+    ]).then(function(results) {
+      return res.json({
+        articleHistories: results[0].map(function(articleHistory) {
+          return articleHistory.toJSONFor(user);
+        }),
+        articleHistoriesCount: results[1],
+      });
+    }).catch(next);
+  });
 });
 
 module.exports = router;
