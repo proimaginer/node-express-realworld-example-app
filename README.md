@@ -1,4 +1,4 @@
-### 1. 개발 내용 설명  
+### 1. commit 및 개발 내용 설명  
 - ArticleHistory 모델 및 로직 추가  
   - ArticleHistory 모델 생성  
     ```javascript
@@ -20,14 +20,20 @@
 
 - ArticleHistory 목록 조회 API 추가  
   - GET /articles/{{slug}}/article-histories  
-  - 로그인된 유저 토큰 정보와 article의 slug 정보로 article-history 목록을 조회해서 내려준다.  
-  - 자신이 생성한 article이 아닌 경우 404 에러 발생
+  - 자신이 생성한 article이 아닌 경우 404 에러 발생  
+  - 로그인된 유저 토큰 정보와 article의 slug 정보로 ArticleHistory 목록을 조회해서 내려준다.  
 
 - ArticleHistory 목록 조회 테스트코드 추가  
   - 개발 시에는 postman으로 단일 조회 테스트  
     tests/test.js에 postman으로 사용하는 방법과 동일한 axios 로직 추가
   - 개발 완료 후 api-tests.postman.json에 ArticleHistory API 관련 테스트코드 추가 > `npm run test` 로 테스트
-  ![Node/Express/Mongoose Example App](test-image.png)
+
+- GET /article-histories API 추가
+  - GET /article-histories  
+  - 자신이 생성한 article이 없을 경우 404 에러 발생  
+  - 로그인된 유저 토큰 정보로 ArticleHistory 목록을 조회해서 내려준다.  
+
+![Node/Express/Mongoose Example App](test-image.png)
 ### 2. 실행 및 테스트 방법
 
 1. 설치 방법

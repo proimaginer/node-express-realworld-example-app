@@ -287,7 +287,7 @@ router.delete('/:article/comments/:comment', auth.required, function(req, res, n
   }
 });
 
-// ArticleHistory 조회 API
+// Article별 ArticleHistory 목록 조회 API
 router.get('/:article/article-histories', auth.required, function(req, res, next) {
   // slug와 요청한 유저 정보로 조회하기 위한 쿼리 생성
   const articleSlug = req.article.slug;

@@ -1867,9 +1867,35 @@
       "name": "ArticleHistory",
       "description": "ArticleHistory GET List",
       "item": [{
-        "name": "GET ArticleHistories",
+        "name": "GET /articles/{{slug}}/article-histories",
         "request": {
           "url": "{{apiUrl}}/articles/{{slug}}/article-histories",
+          "method": "GET",
+          "header": [{
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          },
+          {
+            "key": "X-Requested-With",
+            "value": "XMLHttpRequest",
+            "description": ""
+          },
+          {
+            "key": "Authorization",
+            "value": "Token {{token}}",
+            "description": ""
+          }],
+          "body": {
+            "mode": "raw",
+            "raw": ""
+          },
+          "description": ""
+        }
+      }, {
+        "name": "GET /article-histories",
+        "request": {
+          "url": "{{apiUrl}}/article-histories",
           "method": "GET",
           "header": [{
             "key": "Content-Type",

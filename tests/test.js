@@ -1,7 +1,6 @@
 const axios = require('axios');
 
 const url = 'http://localhost:3000/api';
-const slug = 'how-to-train-your-dragon-bd7fxg';
 
 const run = async () => {
   const res1 = await axios.post(`${url}/users/login`, {
@@ -11,7 +10,8 @@ const run = async () => {
     },
   });
 
-  const res2 = await axios.get(`${url}/articles/${slug}/article-histories`, {
+  // 내가 생성/수정/삭제한 ArticleHistory 목록 조회
+  const res2 = await axios.get(`${url}/article-histories`, {
     headers: {
       authorization: `Token ${res1.data.user.token}`,
     },
